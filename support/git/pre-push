@@ -1,0 +1,31 @@
+#! /bin/bash
+
+function header {
+    echo "Letscode.hu combo-breaker"
+}
+
+function test {
+ echo -e 'Running tests...\c'
+ vendor/phpunit/phpunit/phpunit > /dev/null
+ check $?
+}
+function check {
+    if [ $1 == 0 ]; then
+        pass
+    else
+        failed
+    fi
+}
+
+function pass {
+    echo -e "\e[32mpassed!\e[0m\n"
+}
+
+function failed {
+    echo -e "\e[31mfailed!\e[0m\n"
+    exit 1
+}
+
+header
+test
+exit 0
