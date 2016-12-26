@@ -1,14 +1,37 @@
 #! /bin/bash
 
 function header {
-    echo "Letscode.hu combo-breaker"
+    echo "Pre-push hook for Letscode REST API"
+}
+
+function git_checker {
+    echo -e 'Checking working directory...\c'
+    if [ -n "$(git status --porcelain)" ]; then
+      echo -e "\e[31mplease commit/stash your changes first!\e[0m\n"
+      exit 1
+    else
+      echo -e "\e[32mclean!\e[0m\n"
+    fi
+}
+
+function checkstyle {
+    echo -e 'Running codesniffer...\c'
+    vendor/squizlabs/php_codesniffer/scripts/phpcs src --standard=PSR2 > /dev/null
+    check $?
+}
+
+function mess_detector {
+    echo -e 'Running mess detector...\c'
+    vendor/phpmd/phpmd/src/bin/phpmd src text cleancode,naming,controversial,design --suffixes php,phtml  > /dev/null
+    check $?
 }
 
 function test {
- echo -e 'Running tests...\c'
- vendor/phpunit/phpunit/phpunit > /dev/null
- check $?
+    echo -e 'Running tests...\c'
+    vendor/phpunit/phpunit/phpunit > /dev/null
+    check $?
 }
+
 function check {
     if [ $1 == 0 ]; then
         pass
@@ -27,5 +50,8 @@ function failed {
 }
 
 header
+git_checker
+checkstyle
+mess_detector
 test
 exit 0

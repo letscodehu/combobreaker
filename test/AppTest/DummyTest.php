@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tacsiazuma
- * Date: 2016.12.26.
- * Time: 12:18
- */
 
 namespace AppTest;
 

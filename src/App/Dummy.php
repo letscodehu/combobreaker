@@ -1,18 +1,27 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: tacsiazuma
- * Date: 2016.12.26.
- * Time: 12:18
- */
 
 namespace App;
 
+/**
+ * Class Dummy
+ *
+ * @category Library
+ * @package  App
+ * @author   Papp Krisztian <fejlesztes@letscode.hu>
+ * @license  https://www.gnu.org/licenses/gpl-3.0.en.html GPL
+ * @link     http://pear.php.net/package/PackageName
+ */
+class Dummy
+{
 
-class Dummy {
 
-    public function comboBreaker() {
-        return "c-c-c-combo breaker";
+    /**
+     * Breakes the combo.
+     *
+     * @return string
+     */
+    public function comboBreaker()
+    {
+        return 'c-c-c-combo breaker';
     }
-
 }
