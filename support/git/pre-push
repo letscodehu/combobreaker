@@ -4,6 +4,24 @@ function header {
     echo "Pre-push hook for Letscode REST API"
 }
 
+function lint {
+    echo -e 'Checking for syntax errors...\c'
+    for file in `find src/. test/.`
+    do
+        EXTENSION="${file##*.}"
+
+        if [ "$EXTENSION" == "php" ] || [ "$EXTENSION" == "phtml" ]
+        then
+            php -l $file > /dev/null 2>&1
+            if [ $? == 0 ]
+            then
+                failed
+            fi
+        fi
+    done
+    pass
+}
+
 function git_checker {
     echo -e 'Checking working directory...\c'
     if [ -n "$(git status --porcelain)" ]; then
