@@ -6,17 +6,12 @@ function header {
 
 function lint {
     echo -e 'Checking for syntax errors...\c'
-    for file in `find src/. test/.`
+    for file in `find src test -type f -iname "*.php" -o -iname "*.phtml"`
     do
-        EXTENSION="${file##*.}"
-
-        if [ "$EXTENSION" == "php" ] || [ "$EXTENSION" == "phtml" ]
+        php -l $file > /dev/null 2>&1
+        if [ $? != 0 ]
         then
-            php -l $file > /dev/null 2>&1
-            if [ $? == 0 ]
-            then
-                failed
-            fi
+            failed
         fi
     done
     pass
@@ -71,6 +66,7 @@ function failed {
 
 header
 git_checker
+lint
 checkstyle
 mess_detector
 test
