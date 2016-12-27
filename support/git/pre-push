@@ -8,6 +8,7 @@ function git_checker {
     echo -e 'Checking working directory...\c'
     if [ -n "$(git status --porcelain)" ]; then
       echo -e "\e[31mplease commit/stash your changes first!\e[0m\n"
+      mplayer support/git/sad-trompone.mp3 > /dev/null 2>&1
       exit 1
     else
       echo -e "\e[32mclean!\e[0m\n"
@@ -46,6 +47,7 @@ function pass {
 
 function failed {
     echo -e "\e[31mfailed!\e[0m\n"
+    mplayer support/git/sad-trompone.mp3  > /dev/null &
     exit 1
 }
 
